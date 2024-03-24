@@ -18,12 +18,12 @@ public class PlayerAnimations : MonoBehaviour
         if (Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.Space))
         {
             PlayerAnimation.Play("Slow Run");
-        }
+       }
         if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
         {
             PlayerAnimation.Play("Fast Run");
         }
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.Space))
+       if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.LeftShift))
         {
             PlayerAnimation.Play("Jump");
         }
@@ -31,10 +31,14 @@ public class PlayerAnimations : MonoBehaviour
         {
             PlayerAnimation.Play("Standing Jump");
         }
-        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+       if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.Space)&& Input.GetKey(KeyCode.LeftShift))
         {
+            PlayerAnimation.Play("Jump");
+       }
+       if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.Space) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+      {
             PlayerAnimation.Play("Idle");
-        }
+       }
 
 
 

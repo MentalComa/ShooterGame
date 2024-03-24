@@ -15,10 +15,17 @@ public class PlayerController : MonoBehaviour
     public float PlayerSpeed;
 
     private Vector3 _moveVector;
+
+
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
+
+
     }
 
     // Update is called once per frame
@@ -46,6 +53,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && (Input.GetKey(KeyCode.W)))
         {
             _moveVector += transform.forward * 2;
+            
         }
 
         //Jump
@@ -53,6 +61,10 @@ public class PlayerController : MonoBehaviour
         {
             _FallVelocity = -JumpForce;
         }
+
+
+
+       
     }
     void FixedUpdate()
 
@@ -64,6 +76,8 @@ public class PlayerController : MonoBehaviour
         _FallVelocity += gravity * Time.fixedDeltaTime;
 
         _characterController.Move(Vector3.down * _FallVelocity * Time.fixedDeltaTime);
+
+       
 
         //Stop fall if on the ground
         if (_characterController.isGrounded)
