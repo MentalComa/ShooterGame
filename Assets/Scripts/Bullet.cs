@@ -31,17 +31,9 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        var enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
-        if (enemyHealth != null)
-        {
-            enemyHealth.value -= damage;
+        DamageEnemy(collision);
 
-            if (enemyHealth.value <= 0)
-            {
-                Destroy(enemyHealth.gameObject);
-            }
-        }
-        
+
 
         DestroyBullet();
 
@@ -51,6 +43,15 @@ public class Bullet : MonoBehaviour
         }
 
        
+
+    }
+    private void DamageEnemy(Collision collision)
+    {
+        var enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+        if (enemyHealth != null)
+        {
+            enemyHealth.DealDamage(damage);
+        }
 
     }
 }

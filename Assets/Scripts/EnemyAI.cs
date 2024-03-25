@@ -15,13 +15,23 @@ public class EnemyAI : MonoBehaviour
 
     public float viewAngle;
 
+    public float damage = 30;
+
+    private PlayerHealth _playerHealth;
+
     private bool _isPlayerNoticed;
+
+    public Animator animator;
+
+    public float AttackDistance = 1;
     // Start is called before the first frame update
     void Start()
     {
         InitComponentLinks();
 
         PickNewPatrolPoint();
+
+        _playerHealth = player.GetComponent<PlayerHealth>();
     }
 
     // Update is called once per frame
@@ -31,6 +41,8 @@ public class EnemyAI : MonoBehaviour
         NoticePlayerUpdate();
 
         ChaseUpdate();
+
+        AttackUpdate();
 
         PatrolUpdate();
 
@@ -43,7 +55,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!_isPlayerNoticed)
         {
-            if (_navMeshAgent.remainingDistance == 0)
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
             {
                 PickNewPatrolPoint();
             }
@@ -55,8 +67,12 @@ public class EnemyAI : MonoBehaviour
     }
     private void NoticePlayerUpdate()
     {
-        var direction = player.transform.position - transform.position;
+       
         _isPlayerNoticed = false;
+        if (!_playerHealth.IsAlive()) return;
+
+        var direction = player.transform.position - transform.position;
+
         if (Vector3.Angle(transform.forward, direction) < viewAngle)
         {
             RaycastHit hit;
@@ -77,5 +93,23 @@ public class EnemyAI : MonoBehaviour
         {
             _navMeshAgent.destination = player.transform.position;
         }
+    }
+   
+    private void AttackUpdate()
+    {
+        if (_isPlayerNoticed)
+        {
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+            {
+                animator.SetTrigger("Attack");
+                //_playerHealth.GetComponent<PlayerHealth>().DealDamage(damage * Time.deltaTime);
+            }
+        }
+    }
+    public void AttackDamage()
+    { 
+        if (!_isPlayerNoticed) return;
+        if (_navMeshAgent.remainingDistance > (_navMeshAgent.stoppingDistance + AttackDistance)) return;
+            _playerHealth.DealDamage(damage);
     }
 }
