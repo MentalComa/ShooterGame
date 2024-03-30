@@ -10,6 +10,7 @@ TagManager:
   - NoPainting
   - Enemy
   - Color
+  - Grenade
   layers:
   - Default
   - TransparentFX

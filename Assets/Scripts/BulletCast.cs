@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletCast : MonoBehaviour
 {
+    public float damage = 10;
+
     public Bullet bulletPrefab;
     public Transform bulletSourceTransform;
     // Start is called before the first frame update
@@ -17,7 +19,8 @@ public class BulletCast : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Instantiate(bulletPrefab, bulletSourceTransform.position, bulletSourceTransform.rotation);
+           var bullet = Instantiate(bulletPrefab, bulletSourceTransform.position, bulletSourceTransform.rotation);
+            bullet.damage = damage;
         }
     }
 }

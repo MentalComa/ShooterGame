@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour
 
         DestroyBullet();
 
-        if (!collision.gameObject.CompareTag("Player") && !collision.gameObject.CompareTag("Ball"))
+        if (!collision.gameObject.CompareTag("Player") && !collision.gameObject.CompareTag("Bullet"))
         {
             DestroyBullet();
         }

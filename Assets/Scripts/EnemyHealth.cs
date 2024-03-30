@@ -9,11 +9,19 @@ public class EnemyHealth : MonoBehaviour
 
     public Animator animator;
 
+    public Explosion explosionPrefab;
+
+    public PlayerProgress playerProgress;
+    public bool IsAlive()
+    {
+        return value > 0;
+    }
+
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerProgress = FindObjectOfType<PlayerProgress>();
     }
 
     // Update is called once per frame
@@ -23,6 +31,8 @@ public class EnemyHealth : MonoBehaviour
     }
     public void DealDamage(float damage)
     {
+        playerProgress.AddExperience(damage);
+
         value -= damage;
 
         if (value <= 0)
@@ -41,5 +51,12 @@ public class EnemyHealth : MonoBehaviour
         GetComponent<EnemyAI>().enabled = false;
         GetComponent<NavMeshAgent>().enabled = false;
         GetComponent<CapsuleCollider>().enabled = false;
+        MobExplosion();
+    }
+    private void MobExplosion()
+    {
+        if (explosionPrefab == null) return;
+        var explosion = Instantiate(explosionPrefab);
+        explosion.transform.position = transform.position;
     }
 }

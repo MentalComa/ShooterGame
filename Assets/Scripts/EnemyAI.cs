@@ -24,6 +24,12 @@ public class EnemyAI : MonoBehaviour
     public Animator animator;
 
     public float AttackDistance = 1;
+
+    private EnemyHealth _enemyHealth;
+    public bool IsAlive()
+    {
+        return _enemyHealth.IsAlive();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +37,7 @@ public class EnemyAI : MonoBehaviour
 
         PickNewPatrolPoint();
 
-        _playerHealth = player.GetComponent<PlayerHealth>();
+        
     }
 
     // Update is called once per frame
@@ -64,6 +70,8 @@ public class EnemyAI : MonoBehaviour
     private void InitComponentLinks()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _playerHealth = player.GetComponent<PlayerHealth>();
+        _enemyHealth = GetComponent<EnemyHealth>();
     }
     private void NoticePlayerUpdate()
     {
